@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PULSO COURT — Estilo que juega</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --crema: #F5F4EF;
+      --blanco: #FFFFFF;
+      --verde-carbon: #26332F;
+      --salvia: #E4ECE6;
+      --verde-profundo: #42685B;
+      --dorado: #D5A85B;
+      --sombra: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--crema);
+      color: var(--verde-carbon);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--blanco);
+      border-bottom: 1px solid #e5e5e5;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--verde-carbon);
+      text-decoration: none;
+    }
+
+    .nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--verde-carbon);
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--verde-profundo);
+    }
+
+    .cart-btn {
+      background: transparent;
+      border: 1.5px solid var(--verde-profundo);
+      color: var(--verde-profundo);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cart-btn:hover {
+      background: var(--verde-profundo);
+      color: white;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--salvia);
+      padding: 60px 0;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      margin-bottom: 28px;
+      opacity: 0.9;
+    }
+
+    .hero-img img {
+      max-width: 320px;
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+    }
+
+    /* BOTONES */
+    .btn-principal {
+      background: var(--verde-profundo);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-principal:hover {
+      background: #36574c;
+    }
+
+    .btn-principal:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-secundario {
+      background: transparent;
+      border: 1.5px solid #ccc;
+      color: var(--verde-carbon);
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    /* COLECCIÓN */
+    .coleccion {
+      padding: 60px 0 80px;
+    }
+
+    .coleccion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .coleccion-header h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .busqueda input {
+      padding: 10px 18px;
+      border: 1px solid #ddd;
+      border-radius: 30px;
+      width: 260px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .busqueda input:focus {
+      border-color: var(--verde-profundo);
+    }
+
+    .filtros {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filtro-btn {
+      background: white;
+      border: 1.5px solid #ddd;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filtro-btn.active,
+    .filtro-btn:hover {
+      background: var(--verde-profundo);
+      color: white;
+      border-color: var(--verde-profundo);
+    }
+
+    /* GRID PRODUCTOS */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .producto-card {
+      background: var(--blanco);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      transition: transform 0.2s;
+    }
+
+    .producto-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .producto-img {
+      height: 200px;
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .producto-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px;
+    }
+
+    .sin-imagen {
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .producto-info {
+      padding: 16px;
+    }
+
+    .producto-info h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .producto-info .color {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .producto-info .precio {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+    }
+
+    .btn-añadir {
+      width: 100%;
+      background: var(--verde-profundo);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-añadir:hover {
+      background: #36574c;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--verde-carbon);
+      color: #ccc;
+      padding: 50px 0 20px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer h4 {
+      color: white;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .footer p {
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .footer p:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 0.85rem;
+      padding-top: 20px;
+      border-top: 1px solid #3a4a46;
+      color: #999;
+    }
+
+    /* CARRITO */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 200;
+    }
+
+    .cart-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 380px;
+      max-width: 100%;
+      height: 100%;
+      background: white;
+      z-index: 201;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s ease;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+    }
+
+    .cart-panel.active {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-header h3 {
+      font-size: 1.2rem;
+    }
+
+    .cart-header button {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .cart-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      background: #f8f8f8;
+      border-radius: 8px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-info h4 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-info .precio-unit {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .cantidad-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .cantidad-control button {
+      width: 28px;
+      height: 28px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-eliminar {
+      background: none;
+      border: none;
+      color: #c0392b;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .cart-footer {
+      padding: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .cart-total {
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      text-align: right;
+    }
+
+    /* MODAL PAGO */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      width: 100%;
+      max-width: 420px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h3 {
+      margin-bottom: 8px;
+    }
+
+    .aviso {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .modal label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      margin-top: 14px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .modal button[type="submit"] {
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .mensaje-exito {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .mensaje-exito p {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .mensaje-exito strong {
+      color: var(--verde-profundo);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+      .hero-img img {
+        max-width: 260px;
+      }
+      .nav {
+        display: none;
+      }
+      .productos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .producto-img {
+        height: 150px;
+      }
+      .coleccion-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .busqueda input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">PULSO COURT</a>
+      <nav class="nav">
+        <a class="nav-link active" data-filter="todos">Inicio</a>
+        <a class="nav-link" data-filter="basquet">Básquet</a>
+        <a class="nav-link" data-filter="deportivo">Deportivo</a>
+      </nav>
+      <button class="cart-btn" id="abrir-carrito">
+        Carrito (<span id="cart-count">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>ESTILO QUE JUEGA</h1>
+        <p>Sneakers para destacar dentro y fuera de la cancha.</p>
+        <button class="btn-principal" id="btn-explorar">Explorar colección</button>
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=400&fit=crop" alt="Sneaker destacada">
+      </div>
+    </div>
+  </section>
+
+  <!-- COLECCIÓN -->
+  <section class="coleccion" id="coleccion">
+    <div class="container">
+      <div class="coleccion-header">
+        <h2>Nuestra colección</h2>
+        <div class="busqueda">
+          <input type="text" id="buscar" placeholder="Buscar sneakers...">
+        </div>
+      </div>
+
+      <div class="filtros">
+        <button class="filtro-btn active" data-filter="todos">Todos</button>
+        <button class="filtro-btn" data-filter="basquet">Básquet</button>
+        <button class="filtro-btn" data-filter="deportivo">Deportivo</button>
+      </div>
+
+      <div class="productos-grid" id="productos-grid">
+        <!-- Se genera con JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <h4>Sobre Nosotros</h4>
+        <p>Sobre nosotros</p>
+        <p>Compranos en Tienda</p>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <p>Básquet</p>
+        <p>Deportivo</p>
+      </div>
+      <div>
+        <h4>Ayuda</h4>
+        <p>Contacto</p>
+        <p>Envíos</p>
+      </div>
+      <div>
+        <h4>Legales</h4>
+        <p>Privacidad</p>
+        <p>Términos</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2024 PULSO COURT. Todos los derechos reservados. Proyecto universitario de demostración.
+    </div>
+  </footer>
+
+  <!-- PANEL DEL CARRITO -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-panel" id="cart-panel">
+    <div class="cart-header">
+      <h3>Tu carrito</h3>
+      <button id="cerrar-carrito">×</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        Total: <strong id="cart-total">US$0.00</strong>
+      </div>
+      <button class="btn-principal" id="btn-pagar" disabled>Continuar al pago</button>
+    </div>
+  </aside>
+
+  <!-- MODAL DE PAGO -->
+  <div class="modal-overlay" id="modal-pago">
+    <div class="modal">
+      <h3>Simulación de pago</h3>
+      <p class="aviso">Este es un proyecto universitario. No se procesa ningún pago real.</p>
+      
+      <form id="form-pago">
+        <label>Nombre completo</label>
+        <input type="text" required placeholder="Tu nombre">
+        
+        <label>Dirección de envío</label>
+        <input type="text" required placeholder="Calle, número, ciudad">
+        
+        <label>Teléfono</label>
+        <input type="tel" required placeholder="Tu teléfono">
+        
+        <button type="submit" class="btn-principal">Confirmar pedido</button>
+        <button type="button" class="btn-secundario" id="cancelar-pago">Cancelar</button>
+      </form>
+
+      <div id="mensaje-exito" class="mensaje-exito" style="display:none;">
+        <p><strong>Pago exitoso.</strong></p>
+        <p>El envío llegará cuando menos lo esperes...</p>
+        <button class="btn-principal" id="cerrar-exito">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== PRODUCTOS =====
+    const productos = [
+      { id: 'basket-01', nombre: 'PUMA MB.05 — LaMelo Ball', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=300&fit=crop' },
+      { id: 'basket-02', nombre: 'Nike LeBron', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop' },
+      { id: 'basket-03', nombre: 'Nike KD', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=300&h=300&fit=crop' },
+      { id: 'basket-04', nombre: 'Nike Ja', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd30d23b?w=300&h=300&fit=crop' },
+      { id: 'basket-05', nombre: 'Jordan Luka', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=300&h=300&fit=crop' },
+      { id: 'basket-06', nombre: 'Nike Kobe', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=300&fit=crop' },
+      { id: 'basket-07', nombre: 'Under Armour Curry', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop' },
+      { id: 'basket-08', nombre: 'adidas Harden', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=300&h=300&fit=crop' },
+      { id: 'basket-09', nombre: 'ANTA Kai Speed 2 — Kyrie Irving', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd30d23b?w=300&h=300&fit=crop' },
+      { id: 'basket-10', nombre: 'Nike Kobe 9 Moonwalker', categoria: 'basquet', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=300&h=300&fit=crop' },
+      { id: 'deportivo-01', nombre: 'Nike Pegasus', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=300&fit=crop' },
+      { id: 'deportivo-02', nombre: 'Nike Vomero', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop' },
+      { id: 'deportivo-03', nombre: 'adidas Ultraboost', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=300&h=300&fit=crop' },
+      { id: 'deportivo-04', nombre: 'adidas Adizero SL', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd30d23b?w=300&h=300&fit=crop' },
+      { id: 'deportivo-05', nombre: 'ASICS GEL-Nimbus', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=300&h=300&fit=crop' },
+      { id: 'deportivo-06', nombre: 'ASICS Novablast', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=300&h=300&fit=crop' },
+      { id: 'deportivo-07', nombre: 'New Balance Fresh Foam X 1080', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop' },
+      { id: 'deportivo-08', nombre: 'New Balance Fresh Foam X 880', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=300&h=300&fit=crop' },
+      { id: 'deportivo-09', nombre: 'PUMA Deviate Nitro', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd30d23b?w=300&h=300&fit=crop' },
+      { id: 'deportivo-10', nombre: 'HOKA Clifton', categoria: 'deportivo', precio: 69.99, color: 'Según imagen', img: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=300&h=300&fit=crop' }
+    ];
+
+    // ===== RENDER PRODUCTOS =====
+    const grid = document.getElementById('productos-grid');
+
+    function renderProductos(lista) {
+      grid.innerHTML = '';
+      lista.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'producto-card';
+        card.dataset.categoria = p.categoria;
+        card.dataset.nombre = p.nombre.toLowerCase();
+        card.innerHTML = `
+          <div class="producto-img">
+            <img src="${p.img}" alt="${p.nombre}">
+          </div>
+          <div class="producto-info">
+            <h3>${p.nombre}</h3>
+            <p class="color">${p.color}</p>
+            <p class="precio">US$${p.precio.toFixed(2)}</p>
+            <button class="btn-añadir" 
+                    data-id="${p.id}"
+                    data-nombre="${p.nombre}"
+                    data-precio="${p.precio}"
+                    data-img="${p.img}">
+              Añadir
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Volver a asignar eventos de añadir
+      document.querySelectorAll('.btn-añadir').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const nombre = btn.dataset.nombre;
+          const precio = parseFloat(btn.dataset.precio);
+          const img = btn.dataset.img;
+
+          const existente = carrito.find(item => item.id === id);
+          if (existente) {
+            existente.cantidad++;
+          } else {
+            carrito.push({ id, nombre, precio, img, cantidad: 1 });
+          }
+          guardarYRenderizar();
+        });
+      });
+    }
+
+    renderProductos(productos);
+
+    // ===== CARRITO =====
+    let carrito = JSON.parse(localStorage.getItem('pulsoCarrito')) || [];
+
+    const cartCount = document.getElementById('cart-count');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const cartPanel = document.getElementById('cart-panel');
+    const cartOverlay = document.getElementById('cart-overlay');
+    const btnPagar = document.getElementById('btn-pagar');
+
+    document.getElementById('abrir-carrito').addEventListener('click', () => {
+      cartPanel.classList.add('active');
+      cartOverlay.classList.add('active');
+    });
+
+    document.getElementById('cerrar-carrito').addEventListener('click', cerrarCarrito);
+    cartOverlay.addEventListener('click', cerrarCarrito);
+
+    function cerrarCarrito() {
+      cartPanel.classList.remove('active');
+      cartOverlay.classList.remove('active');
+    }
+
+    function guardarYRenderizar() {
+      localStorage.setItem('pulsoCarrito', JSON.stringify(carrito));
+      renderizarCarrito();
+    }
+
+    function renderizarCarrito() {
+      cartItems.innerHTML = '';
+
+      if (carrito.length === 0) {
+        cartItems.innerHTML = '<p style="text-align:center;color:#999;padding:40px 0;">Tu carrito está vacío</p>';
+        cartCount.textContent = '0';
+        cartTotal.textContent = 'US$0.00';
+        btnPagar.disabled = true;
+        return;
+      }
+
+      let total = 0;
+      let cantidadTotal = 0;
+
+      carrito.forEach(item => {
+        total += item.precio * item.cantidad;
+        cantidadTotal += item.cantidad;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img src="${item.img || ''}" alt="${item.nombre}">
+          <div class="cart-item-info">
+            <h4>${item.nombre}</h4>
+            <div class="precio-unit">US$${item.precio.toFixed(2)}</div>
+            <div class="cantidad-control">
+              <button class="menos" data-id="${item.id}">−</button>
+              <span>${item.cantidad}</span>
+              <button class="mas" data-id="${item.id}">+</button>
+            </div>
+            <button class="btn-eliminar" data-id="${item.id}">Eliminar</button>
+          </div>
+        `;
+        cartItems.appendChild(div);
+      });
+
+      cartCount.textContent = cantidadTotal;
+      cartTotal.textContent = `US$${total.toFixed(2)}`;
+      btnPagar.disabled = false;
+
+      document.querySelectorAll('.mas').forEach(btn => {
+        btn.addEventListener('click', () => cambiarCantidad(btn.dataset.id, 1));
+      });
+      document.querySelectorAll('.menos').forEach(btn => {
+        btn.addEventListener('click', () => cambiarCantidad(btn.dataset.id, -1));
+      });
+      document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', () => eliminarProducto(btn.dataset.id));
+      });
+    }
+
+    function cambiarCantidad(id, cambio) {
+      const item = carrito.find(i => i.id === id);
+      if (!item) return;
+      item.cantidad += cambio;
+      if (item.cantidad <= 0) {
+        carrito = carrito.filter(i => i.id !== id);
+      }
+      guardarYRenderizar();
+    }
+
+    function eliminarProducto(id) {
+      carrito = carrito.filter(i => i.id !== id);
+      guardarYRenderizar();
+    }
+
+    // ===== FILTROS Y BÚSQUEDA =====
+    const filtroBtns = document.querySelectorAll('.filtro-btn');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const buscarInput = document.getElementById('buscar');
+
+    function filtrarProductos() {
+      const filtroActivo = document.querySelector('.filtro-btn.active')?.dataset.filter || 'todos';
+      const texto = buscarInput.value.toLowerCase().trim();
+
+      const filtrados = productos.filter(p => {
+        const coincideCategoria = filtroActivo === 'todos' || p.categoria === filtroActivo;
+        const coincideTexto = p.nombre.toLowerCase().includes(texto);
+        return coincideCategoria && coincideTexto;
+      });
+
+      renderProductos(filtrados);
+    }
+
+    filtroBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filtroBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filtrarProductos();
+      });
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const filtro = link.dataset.filter;
+        filtroBtns.forEach(b => {
+          b.classList.toggle('active', b.dataset.filter === filtro);
+        });
+        filtrarProductos();
+        document.getElementById('coleccion').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    buscarInput.addEventListener('input', filtrarProductos);
+
+    document.getElementById('btn-explorar').addEventListener('click', () => {
+      document.getElementById('coleccion').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // ===== PAGO SIMULADO =====
+    const modalPago = document.getElementById('modal-pago');
+    const formPago = document.getElementById('form-pago');
+    const mensajeExito = document.getElementById('mensaje-exito');
+
+    btnPagar.addEventListener('click', () => {
+      cerrarCarrito();
+      modalPago.classList.add('active');
+      formPago.style.display = 'block';
+      mensajeExito.style.display = 'none';
+    });
+
+    document.getElementById('cancelar-pago').addEventListener('click', () => {
+      modalPago.classList.remove('active');
+    });
+
+    formPago.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formPago.style.display = 'none';
+      mensajeExito.style.display = 'block';
+      carrito = [];
+      guardarYRenderizar();
+    });
+
+    document.getElementById('cerrar-exito').addEventListener('click', () => {
+      modalPago.classList.remove('active');
+    });
+
+    // Inicializar
+    renderizarCarrito();
+  </script>
+</body>
+</html>
